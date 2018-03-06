@@ -15,24 +15,18 @@ public class GameGateway implements game.GameConstants {
     
     public GameGateway() {
         try {
-        // Create a socket to connect to the server
         Socket socket = new Socket("localhost", 8000);
-
-        // Create an input stream to receive data from the server
         outputToServer = new PrintWriter(socket.getOutputStream());
-
-        // Create an input stream to read data from the server
         inputFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
         ex.printStackTrace();
         }
-        
     }
+    
     public int getPlayerNumber() throws IOException
     {
         return Integer.parseInt(inputFromServer.readLine());
-    }        
+    }   
+    
     
 }
