@@ -14,7 +14,7 @@ public class GameGateway implements game.GameConstants {
     
     private PrintWriter outputToServer;
     private BufferedReader inputFromServer;
-    private KeyCode keyPressed = null;
+    private KeyCode keyPressed = KeyCode.SPACE;
     
     public GameGateway() {
         try {
@@ -59,8 +59,10 @@ public class GameGateway implements game.GameConstants {
     
     public Point getBall() throws IOException
     {
-        String[] coordinates = inputFromServer.readLine().split(", ");
-        Point ball = new Point(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]));
+        String iRead = inputFromServer.readLine();
+        System.out.println(iRead); //HEREEE 
+        String[] coordinates = iRead.split(", ");
+        Point ball = new Point(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));
         return ball;   
     }  
     
@@ -86,8 +88,13 @@ public class GameGateway implements game.GameConstants {
                         break;
                     case RIGHT:
                         outputToServer.println("R");
-                        outputToServer.println("R");
+                        outputToServer.flush();
+                        break;   
+                    default:
+                        outputToServer.println("N");
+                        outputToServer.flush();
                         break;
+                    
         }
     }
     

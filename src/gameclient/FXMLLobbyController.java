@@ -2,6 +2,7 @@
 package gameclient;
 
 import game.GameConstants;
+import gamephysics.Point;
 import gamesim.Ball;
 import gamesim.Simulation;
 import java.net.URL;
@@ -73,31 +74,42 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
               root.setShapes(sim.setUpShapes());
         
               Scene scene = new Scene(root, 300, 250);
-              
-              root.setOnKeyPressed(e -> {
-                key = e.getCode();
-                gateway.storeKey(key); 
-                new Thread(() -> {
-                    try {
-                        while(true)
-                        {       
-                        gateway.sendMove();
-                        sim.setScoreP2(gateway.getScore2());
-                        sim.setScoreP1(gateway.getScore1());
-                        sim.setP1Pos(gateway.getPaddle1().x, gateway.getPaddle1().y);
-                        sim.setP2Pos(gateway.getPaddle2().x, gateway.getPaddle2().y);
-                        ball.setPos(gateway.getBall());
-                        }
-                    } catch (Exception ex) { }
-                 }).start();   
-              });
-                
-               root.requestFocus(); 
+              root.requestFocus(); 
 
                stage.setTitle("Game Physics");
                stage.setScene(scene);
                stage.setOnCloseRequest((event)->System.exit(0));
                stage.show();
+               
+                root.setOnKeyPressed(e -> {
+                key = e.getCode();
+                gateway.storeKey(key); 
+               
+              });
+                
+                ball = new Ball(0,0,5,5);
+              new Thread(() -> {
+                    try {
+                        while(true)
+                        {   
+                        gateway.sendMove();
+                        ball.setPos(gateway.getBall());
+                        sim.setScoreP2(gateway.getScore2());
+                        sim.setScoreP1(gateway.getScore1());
+                        Point p1 = gateway.getPaddle1();
+                        sim.setP1Pos(p1.x, p1.y);
+                        Point p2 = gateway.getPaddle2();
+                        sim.setP2Pos(p2.x, p2.y);
+                        //sim.evolve(1.0);
+                        Platform.runLater(()->sim.updateShapes());
+                        try {
+                            Thread.sleep(250);
+                            } catch (InterruptedException ex) {} 
+                            }
+                    } catch (Exception ex) { 
+                    ex.printStackTrace();
+                    }
+                 }).start();     
                 
                  
             }); 
