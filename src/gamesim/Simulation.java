@@ -139,13 +139,16 @@ public class Simulation {
     
     public void setScoreP1(int score)
     {
-        p1Scores.setText("Player Two: " + score);
+        p1Scores.setText("Player One: " + score);
     }
     public void setScoreP2(int score)
     {
         p2Scores.setText("Player Two: " + score);
     }
-    
+    public void setBallPos(Point p)
+    {
+        ball.setPos(p);
+    }
     public void setP1Pos(double x, double y)
     {
         player1.setPos(x,y);

@@ -93,9 +93,9 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
                         while(true)
                         {   
                         gateway.sendMove();
-                        ball.setPos(gateway.getBall());
-                        sim.setScoreP2(gateway.getScore2());
+                        sim.setBallPos(gateway.getBall());
                         sim.setScoreP1(gateway.getScore1());
+                        sim.setScoreP2(gateway.getScore2());
                         Point p1 = gateway.getPaddle1();
                         sim.setP1Pos(p1.x, p1.y);
                         Point p2 = gateway.getPaddle2();
@@ -103,7 +103,7 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
                         //sim.evolve(1.0);
                         Platform.runLater(()->sim.updateShapes());
                         try {
-                            Thread.sleep(250);
+                            Thread.sleep(200);
                             } catch (InterruptedException ex) {} 
                             }
                     } catch (Exception ex) { 

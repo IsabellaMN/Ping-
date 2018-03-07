@@ -60,7 +60,6 @@ public class GameGateway implements game.GameConstants {
     public Point getBall() throws IOException
     {
         String iRead = inputFromServer.readLine();
-        System.out.println(iRead); //HEREEE 
         String[] coordinates = iRead.split(", ");
         Point ball = new Point(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));
         return ball;   
@@ -96,6 +95,7 @@ public class GameGateway implements game.GameConstants {
                         break;
                     
         }
+        keyPressed = KeyCode.SPACE;
     }
     
 }
