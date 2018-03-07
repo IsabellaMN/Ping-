@@ -86,8 +86,8 @@ public class Simulation {
     public void moveInner(int deltaX,int deltaY)
     {
         lock.lock();
-        int dX = deltaX;
-        int dY = deltaY;
+        double dX = deltaX;
+        double dY = deltaY;
         if(player1.x + deltaX < 0)
           dX = -player1.x;
         if(player1.x + player1.width + deltaX > outermost.width)
@@ -115,12 +115,63 @@ public class Simulation {
         }
         lock.unlock();
     }
+
+    public Point getP1Pos()
+    {
+        return player1.getPos();
+    }
+    public Point getP2Pos()
+    {
+        return player2.getPos();
+    }
+    public Point getBall()
+    {
+        return ball.getBall();
+    }
+    public int getScoreP1()
+    {
+        return p1Score;
+    }
+    public int getScoreP2()
+    {
+        return p2Score;
+    }
+    
+    public void setScoreP1(int score)
+    {
+        p1Scores.setText("Player Two: " + score);
+    }
+    public void setScoreP2(int score)
+    {
+        p2Scores.setText("Player Two: " + score);
+    }
+    
+    public void setP1Pos(double x, double y)
+    {
+        player1.setPos(x,y);
+    }
+    public void setP2Pos(double x, double y)
+    {
+        player2.setPos(x,y);
+    }
+    
+    public void assignPlayer()
+    {
+        if(player1.getTaken()==0)
+        {
+            player1.assignPlayer();
+        }
+        else
+        {
+            player2.assignPlayer();
+        }
+    }
     
     public void movep2(int deltaX,int deltaY)
     {
         lock.lock();
-        int dX = deltaX;
-        int dY = deltaY;
+        double dX = deltaX;
+        double dY = deltaY;
         if(player2.x + deltaX < 0)
           dX = -player2.x;
         if(player2.x + player2.width + deltaX > outermost.width)

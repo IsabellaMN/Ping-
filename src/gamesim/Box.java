@@ -9,10 +9,11 @@ import javafx.scene.shape.Shape;
 public class Box {
     private ArrayList<LineSegment> walls;
     private Rectangle r;
-    public int x;
-    public int y;
+    public double x;
+    public double y;
     public int width;
     public int height;
+    public int taken = 0;
     
     // Set outward to true if you want a box with outward pointed normals
     public Box(int x,int y,int width,int height,boolean outward)
@@ -35,7 +36,11 @@ public class Box {
         }
     }
     
-    public void setPos(int x, int y)
+    public void setPos(Point p)
+    {
+        setPos(p.x,p.y);
+    }
+    public void setPos(double x, double y)
     {
         this.x=x;
         this.y=y;
@@ -68,7 +73,7 @@ public class Box {
         return null;
     }
     
-    public void move(int deltaX,int deltaY)
+    public void move(double deltaX,double deltaY)
     {
         for(int n = 0;n < walls.size();n++)
             walls.get(n).move(deltaX,deltaY);
@@ -97,6 +102,25 @@ public class Box {
         r.setFill(Color.BLUE);
         r.setStroke(Color.BLACK);
         return r;
+    }
+    
+    public Point getPos()
+    {
+        Point p = new Point(x,y);
+        return p;
+    }
+    public int getTaken()
+    {
+        return taken;
+    }
+    public void assignPlayer()
+    {
+        taken = 1;
+    }
+    
+    public void removePlayer()
+    {
+        taken = 0;
     }
     
     public void updateShape()

@@ -2,6 +2,7 @@
 package gameclient;
 
 import game.GameConstants;
+import gamesim.Ball;
 import gamesim.Simulation;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,14 +11,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 
 public class FXMLLobbyController implements Initializable, GameConstants  {
 
     private GameGateway gateway;
+    private Simulation sim;
+    private Ball ball;
     private String myName = "";
     private String otherName = "";
+    private KeyCode key = null; 
     
     @FXML
     private Label lobby;
@@ -77,40 +82,41 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
         
               Scene scene = new Scene(root, 300, 250);
               root.setOnKeyPressed(e -> {
-                switch (e.getCode()) {
-                    case DOWN:
-                        sim.moveInner(0, 3);
-                        break;
-                    case UP:
-                        sim.moveInner(0, -3);
-                        break;
-                    case LEFT:
-                        sim.moveInner(-3, 0);
-                        break;
-                    case RIGHT:
-                        sim.moveInner(3, 0);
-                        break;
-                    case S:
-                        sim.movep2(0,3);
-                        break;
-                    case W:
-                        sim.movep2(0,-3);
-                        break;
-                    case A:
-                        sim.movep2(-3,0);
-                        break;
-                    case D:
-                        sim.movep2(3,0);
-                        break;
-                    }
-                });
-
+                key = e.getCode();
+                gateway.storeKey(key);
+                //sim.setP1Pos(PLAYER1, PLAYER1);
+              });
+              
                 root.requestFocus(); 
 
                 stage.setTitle("Game Physics");
                 stage.setScene(scene);
                 stage.setOnCloseRequest((event)->System.exit(0));
                 stage.show();
+                
+//                new Thread(() -> {
+//                while (true) {
+//                sim.evolve(1.0);
+//                Platform.runLater(()->sim.updateShapes());
+//                try {
+//                    Thread.sleep(25);
+//                } catch (InterruptedException ex) {}
+//                }
+//                }).start(); 
+                
+                new Thread(() -> {
+                    try {
+                        while(true)
+                        {    
+                        gateway.sendMove();
+                        sim.setScoreP2(gateway.getScore2());
+                        sim.setScoreP1(gateway.getScore1());
+                        sim.setP1Pos(gateway.getPaddle1().x, gateway.getPaddle1().y);
+                        sim.setP2Pos(gateway.getPaddle2().x, gateway.getPaddle2().y);
+                        ball.setPos(gateway.getBall());
+                        }
+                    } catch (Exception ex) { }
+                 }).start();    
             });
         }).start();
         
