@@ -28,11 +28,6 @@ public class GameGateway implements game.GameConstants {
         return Integer.parseInt(inputFromServer.readLine());
     }   
     
-//    public int getPlayerNumber2() throws IOException
-//    {
-//        outputToServer.println(PLAYER2);
-//        outputToServer.flush();
-//        return Integer.parseInt(inputFromServer.readLine());   
-//    } 
+
     
 }
