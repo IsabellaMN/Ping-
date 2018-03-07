@@ -74,14 +74,18 @@ public class GameGateway implements game.GameConstants {
         switch (keyPressed) {
                     case DOWN:
                         outputToServer.println("D");
+                        outputToServer.flush();
                         break;
                     case UP:
                         outputToServer.println("U");
+                        outputToServer.flush();
                         break;
                     case LEFT:
                         outputToServer.println("L");
+                        outputToServer.flush();
                         break;
                     case RIGHT:
+                        outputToServer.println("R");
                         outputToServer.println("R");
                         break;
         }

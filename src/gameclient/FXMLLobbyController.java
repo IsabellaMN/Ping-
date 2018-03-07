@@ -83,8 +83,7 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
               Scene scene = new Scene(root, 300, 250);
               root.setOnKeyPressed(e -> {
                 key = e.getCode();
-                gateway.storeKey(key);
-                //sim.setP1Pos(PLAYER1, PLAYER1);
+                gateway.storeKey(key);  
               });
               
                 root.requestFocus(); 
@@ -94,15 +93,15 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
                 stage.setOnCloseRequest((event)->System.exit(0));
                 stage.show();
                 
-//                new Thread(() -> {
-//                while (true) {
-//                sim.evolve(1.0);
-//                Platform.runLater(()->sim.updateShapes());
-//                try {
-//                    Thread.sleep(25);
-//                } catch (InterruptedException ex) {}
-//                }
-//                }).start(); 
+//                    new Thread(() -> {
+//                    while (true) {
+//                    sim.evolve(1.0);
+//                    Platform.runLater(()->sim.updateShapes());
+//                    try {
+//                        Thread.sleep(25);
+//                    } catch (InterruptedException ex) {}
+//                    }
+//                    }).start(); 
                 
                 new Thread(() -> {
                     try {
@@ -117,7 +116,7 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
                         }
                     } catch (Exception ex) { }
                  }).start();    
-            });
+            }); 
         }).start();
         
         
