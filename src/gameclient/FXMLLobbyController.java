@@ -39,38 +39,30 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
         
         new Thread(() -> {
             try {
-                // Get notification from the server
                 int player = gateway.getPlayerNumber();
                 System.out.println("help"+player);
                 // Am I player 1 or 2?
                 if (player == PLAYER1) {
-                    //myName = "PLAYER 1";
-                    //otherName = "PLAYER 2";
                     Platform.runLater(() -> {
                         lblTitle.setText("PLAYER 1");
                         lblStatus.setText("Waiting for player 2 to join");
                     });
-                    // Receive startup notification from the server
-                    gateway.getPlayerNumber(); // Whatever read is ignored WHAT????????
+                    gateway.getPlayerNumber(); 
                     // The other player has joined
                     Platform.runLater(() ->
                             lblStatus.setText("Player 2 has joined. Game will start in 10 seconds"));
                 }
                 else if (player == PLAYER2) {
-
                     Platform.runLater(() -> {
                     lblTitle.setText("PLAYER 2");
                     lblStatus.setText("Game will start in 10 seconds");
                      });
                 }
-            }
-            catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            
+            } catch (Exception ex) {
+              ex.printStackTrace();}
             
             try {
-                Thread.sleep(10*1000); // Sleep for 5 seconds 
+                Thread.sleep(10*1000); // Sleep for 10 seconds 
             } catch (InterruptedException ex) { }
             
             Platform.runLater(() -> {
@@ -81,32 +73,14 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
               root.setShapes(sim.setUpShapes());
         
               Scene scene = new Scene(root, 300, 250);
+              
               root.setOnKeyPressed(e -> {
                 key = e.getCode();
-                gateway.storeKey(key);  
-              });
-              
-                root.requestFocus(); 
-
-                stage.setTitle("Game Physics");
-                stage.setScene(scene);
-                stage.setOnCloseRequest((event)->System.exit(0));
-                stage.show();
-                
-//                    new Thread(() -> {
-//                    while (true) {
-//                    sim.evolve(1.0);
-//                    Platform.runLater(()->sim.updateShapes());
-//                    try {
-//                        Thread.sleep(25);
-//                    } catch (InterruptedException ex) {}
-//                    }
-//                    }).start(); 
-                
+                gateway.storeKey(key); 
                 new Thread(() -> {
                     try {
                         while(true)
-                        {    
+                        {       
                         gateway.sendMove();
                         sim.setScoreP2(gateway.getScore2());
                         sim.setScoreP1(gateway.getScore1());
@@ -115,7 +89,17 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
                         ball.setPos(gateway.getBall());
                         }
                     } catch (Exception ex) { }
-                 }).start();    
+                 }).start();   
+              });
+                
+               root.requestFocus(); 
+
+               stage.setTitle("Game Physics");
+               stage.setScene(scene);
+               stage.setOnCloseRequest((event)->System.exit(0));
+               stage.show();
+                
+                 
             }); 
         }).start();
         
