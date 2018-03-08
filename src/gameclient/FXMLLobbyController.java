@@ -130,7 +130,7 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
         new Thread (() ->{
         try{
             Platform.runLater(() ->
-            lobby.setText("Welcome to This Thing I Guess"));
+            lobby.setText("Please give us an A"));
             while(true) 
            {
             Platform.runLater(() ->
