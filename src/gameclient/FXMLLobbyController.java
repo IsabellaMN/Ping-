@@ -94,16 +94,18 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
                         {   
                         gateway.sendMove();
                         sim.setBallPos(gateway.getBall());
-                        sim.setScoreP1(gateway.getScore1());
-//                        if(gateway.getScore1()==5)
-//                        {
-//                            sim.getWinner().setText("Player 1 wins!");
-//                        }
-//                        if(gateway.getScore2()==5)
-//                        {
-//                            sim.getWinner().setText("Player 2 wins!");
-//                        }
-                        sim.setScoreP2(gateway.getScore2());
+                        int scoreP1 = gateway.getScore1();
+                        sim.setScoreP1(scoreP1);
+                        if(scoreP1==5)
+                        {
+                            sim.getWinner().setText("Player 1 wins!");
+                        }
+                        int scoreP2 = gateway.getScore2();
+                        sim.setScoreP2(scoreP2);
+                        if(scoreP2==5)
+                        {
+                            sim.getWinner().setText("Player 2 wins!");
+                        }
                         Point p1 = gateway.getPaddle1();
                         sim.setP1Pos(p1.x, p1.y);
                         Point p2 = gateway.getPaddle2();
