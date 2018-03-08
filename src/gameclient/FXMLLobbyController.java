@@ -111,7 +111,7 @@ public class FXMLLobbyController implements Initializable, GameConstants  {
                         //sim.evolve(1.0);
                         Platform.runLater(()->sim.updateShapes());
                         try {
-                            Thread.sleep(250);
+                            Thread.sleep(25);
                             } catch (InterruptedException ex) {} 
                             }
                     } catch (Exception ex) { 
